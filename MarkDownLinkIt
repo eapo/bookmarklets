@@ -1,0 +1,1 @@
+javascript:/*MarkDownLinkIt! bookmarklet*/ function utoa(t){return window.btoa(unescape(encodeURIComponent(t)))}var str=prompt("HIVE it!","["+document.title+"]("+document.location.href+")");str.length>0?content=str:content=document.location.href,window.open("https://hive.blog/submit.html?body="+utoa(content)+"&title="+utoa(document.title),"_blank",!1);
