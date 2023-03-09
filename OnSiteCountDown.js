@@ -1,34 +1,10 @@
 javascript:(function() {
   var container = document.createElement('div');
   container.id = 'container';
-  container.style.position = 'fixed';
-  container.style.top = '50%';
-  container.style.left = '50%';
-  container.style.transform = 'translate(-50%, -50%)';
-  container.style.width = '200px';
-  container.style.height = '200px';
-  container.style.backgroundColor = 'red';
-  container.style.opacity = '0.3';
-  container.style.borderRadius = '10px';
-  container.style.zIndex = '9999';
-  container.style.userSelect = 'none';
-  container.style.webkitUserSelect = 'none';
-  container.style.msUserSelect = 'none';
-  container.style.cursor = 'move';
+  container.style.cssText='position:fixed;bottom:10vw;left:10vh;width:200px;height:200px;background-color:red;opacity:0.3;border-radius:15px;z-index:9999;user-select:none;cursor:move;box-shadow:#fff 3px 3px 1px;';
   
   var close = document.createElement('div');
-  close.style.position = 'absolute';
-  close.style.top = '5px';
-  close.style.right = '5px';
-  close.style.width = '20px';
-  close.style.height = '20px';
-  close.style.backgroundColor = 'white';
-  close.style.borderRadius = '50%';
-  close.style.lineHeight = '20px';
-  close.style.textAlign = 'center';
-  close.style.fontSize = '14px';
-  close.style.fontWeight = 'bold';
-  close.style.cursor = 'pointer';
+  close.style.cssText='position:absolute;top:0;right:0;width:1em;height:1em;border:2px solid #fff;border-radius:15px;text-align:center;font-size:1.3em;font-weight:bold;cursor:pointer;padding:0.7em;color:#fff;line-height:0;text-indent:-0.3em;font-family:monospace;';
   close.innerHTML = 'X';
   close.addEventListener('click', function() {
     document.body.removeChild(container);
@@ -37,48 +13,24 @@ javascript:(function() {
   var input = document.createElement('input');
   input.id = 'countdown';
   input.type = 'number';
-  input.style.width = '100%';
-  input.style.height = '80%';
-  input.style.fontSize = '72px';
-  input.style.fontWeight = 'bold';
-  input.style.textAlign = 'center';
-  input.style.color = 'white';
-  input.style.backgroundColor = 'transparent';
+  input.accessKey = 's';
+  input.title = 'Alt + s';
+  input.style.cssText='width:100%;height:76%;font-size:72px;font-weight:bold;text-align:center;color:#fff;background-color:transparent;border:1px inset;border-radius:15px;';
   input.placeholder = 'Enter seconds';
 
-  var set10 = document.createElement('a');
-  set10.href = '#';
-  set10.textContent = '10';
-  set10.style.cssText = 'font-size:18px;font-weight:bold;color:#ffffff !important';
-  set10.style.padding = "0 1em";
-  set10.addEventListener('click', function(event) {
-    event.preventDefault();
-    input.value = '10';
-    startCountdown();
-  });
-  
-  var set25 = document.createElement('a');
-  set25.href = '#';
-  set25.textContent = '25';
-  set25.style.cssText = 'font-size:18px;font-weight:bold;color:#ffffff !important';
-  set25.style.padding = "0 1em";
-  set25.addEventListener('click', function(event) {
-    event.preventDefault();
-    input.value = '25';
-    startCountdown();
-  });
-  
-  var set50 = document.createElement('a');
-  set50.href = '#';
-  set50.textContent = '50';
-  set50.style.cssText = 'font-size:18px;font-weight:bold;color:#ffffff !important';
-  set50.style.padding = "0 1em";
-  set50.addEventListener('click', function(event) {
-    event.preventDefault();
-    input.value = '50';
-    startCountdown();
-  });
-  
+  function playSound() {
+    const ctx = new AudioContext();
+    const osc = ctx.createOscillator();
+    osc.type = "sine";
+    osc.frequency.value = 432;
+    osc.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.18);
+    ctx.oncomplete = function(event) {
+      const audioBuffer = event.renderedBuffer;
+      const audioData = new Float32Array(audioBuffer.length);
+    }
+  }
   
   function startCountdown() {
     var countdown = parseInt(input.value);
@@ -89,6 +41,7 @@ javascript:(function() {
       if (countdown === 0) {
         clearInterval(interval);
         container.style.opacity = '1';
+        playSound();
       }
     }, 1000);
   }
@@ -103,9 +56,23 @@ javascript:(function() {
   controls.style.justifyContent = 'space-between';
   controls.style.marginTop = '10px';
   
-  controls.appendChild(set10);
-  controls.appendChild(set25);
-  controls.appendChild(set50);
+  function addButton(v,a) {
+    var set1 = document.createElement('button');
+    set1.textContent = v;
+    set1.accessKey = a;
+    set1.title = 'Alt + '+a;
+    set1.style.cssText = 'font-size:18px;font-weight:bold;padding:0 1em;font-family:monospace;background:none;border:none;';
+    set1.addEventListener('click', function(event) {
+      event.preventDefault();
+      input.value = v;
+      startCountdown();
+    });
+    return set1;
+  }
+  
+  controls.appendChild(addButton(9,1));
+  controls.appendChild(addButton(28,2));
+  controls.appendChild(addButton(57,3));
  
   container.appendChild(close);
   container.appendChild(input);
