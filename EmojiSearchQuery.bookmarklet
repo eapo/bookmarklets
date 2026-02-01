@@ -1,0 +1,8 @@
+data:text/html, <script> /*EmojiSearchQuery.bookmarklet.v1*/ (function () {
+    var q = prompt("Search query to append:", "");
+    if (!q)
+        return;
+    var sUrl = 'https://search.brave.com/search?summary=1&q=unicode+and+emoji+symbols+for%3A+' + encodeURIComponent(q);
+    window.location.href = sUrl;
+})();
+</script><html style = "background-color:black"></html>
