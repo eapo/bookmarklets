@@ -76,6 +76,14 @@ Mass deselect all cookies
 
 ##### Just copy the following code to the *URL* section of the new Bookmark:
 
+```js
+javascript:/*Cookies NoConsent*/document.querySelectorAll('input[checked]').forEach(item => { item.click();});
 ```
-javascript:document.querySelectorAll('input[checked]').forEach(item => { item.click();});
+
+## IP Whois
+Real-time geolocation over raw registry data based on provided IP address
+
+##### Just copy the following code to the *URL* section of the new Bookmark:
+```js
+javascript:/*IP Whois*/(function(){const ip=prompt("Enter IP or empty for Current IP:");window.open("https://ipwho.is/"+encodeURIComponent(ip),"_blank");})();
 ```
