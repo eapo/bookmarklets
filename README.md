@@ -87,3 +87,11 @@ Real-time geolocation over raw registry data based on provided IP address
 ```js
 javascript:/*IP Whois*/(function(){const ip=prompt("Enter IP or empty for Current IP:");window.open("https://ipwho.is/"+encodeURIComponent(ip),"_blank");})();
 ```
+
+## TwtchTvAutoClaimer
+Twtch hack to claim community point bonuses, while playing 1 sec 432Hz tone (`volume = 0.1`)
+
+##### Just copy the following code to the *URL* section of the new Bookmark:
+```js
+javascript: /* TwtchTvAutoClaimer */(function (){'use strict'; let qs = prompt("querySelector to watch", '[aria-label="Claim Bonus"]'); const toneFrequency = 432; const volume = 0.1; const intervalTime = 10000; let audioCtx; let oscillator; let gainNode; function playTone(){audioCtx = new(window.AudioContext || window.webkitAudioContext)(); oscillator = audioCtx.createOscillator(); gainNode = audioCtx.createGain(); oscillator.frequency.value = toneFrequency; gainNode.gain.value = volume; oscillator.connect(gainNode); gainNode.connect(audioCtx.destination); oscillator.start(); setTimeout(function (){stopTone();}, 1000);} function stopTone(){if (oscillator){oscillator.stop(); oscillator = null;} if (gainNode){gainNode.disconnect(); gainNode = null;} if (audioCtx){audioCtx.close(); audioCtx = null;}} function checkCondition(){const queryResult = document.querySelector(qs); console.log('Checking Bonus'); if (queryResult){playTone(); queryResult.click(); console.log('[' + new Date().toLocaleTimeString() + '] Bonus Claimed');}} function init(){stopTone(); setInterval(checkCondition, intervalTime); console.log('[' + new Date().toLocaleTimeString() + '] Monitor started - checking every', intervalTime, 'ms');} init();})();
+```
